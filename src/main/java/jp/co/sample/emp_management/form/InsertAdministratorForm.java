@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 public class InsertAdministratorForm {
 	/** 名前 */
 	@NotBlank(message = "値を入力してください")
-	@Size(min = 1, max = 50, message = "1〜127文字以内で入力して下さい")
+	@Size(min = 1, max = 50, message = "1〜50文字以内で入力して下さい")
 	private String name;
 	/** メールアドレス */
 	@Size(min = 1, max = 127, message = "1〜127文字以内で入力して下さい")
