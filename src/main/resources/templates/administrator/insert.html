@@ -35,7 +35,6 @@
 						<fieldset>
 							<legend>管理者登録<br>(システムにログインできる管理者を登録します)</legend>
 							<!-- 氏名 -->
-							<span th:text="${duplicate}" style="color:red"></span>
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-12">
@@ -56,6 +55,7 @@
 									<div class="col-sm-12">
 										<label for="mailAddress">
 											メールアドレス:
+												<span th:text="${duplicate}" style="color:red"></span>
 										</label>
 										<label th:if="${#fields.hasErrors('mailAddress')}" th:errors="*{mailAddress}" class="error-messages">
 											メールアドレスを入力してください
@@ -77,6 +77,22 @@
 										</label>
 										<input type="password" name="password" id="password" class="form-control" placeholder="password"
 											 th:field="*{password}" th:errorclass="error-input" value="xxxxxxxx">
+									</div>
+								</div>
+							</div>
+							<!-- パスワード確認用-->
+							<div class="form-group">
+								<div class="row">
+									<div class="col-sm-12">
+										<label for="passwaordConfirm">
+											パスワード確認:
+											<span th:text="${passCheck}" style="color:red"></span>
+										</label>
+										<label th:if="${#fields.hasErrors('passwaordConfirm')}" th:errors="*{passwaordConfirm}" class="error-messages">
+											パスワードをもう一度入力して下さい
+										</label>
+										<input type="password" name="passwaordConfirm" id="passwaordConfirm" class="form-control" placeholder="passwaordConfirm"
+											 th:field="*{passwaordConfirm}" th:errorclass="error-input" value="xxxxxxxx">
 									</div>
 								</div>
 							</div>

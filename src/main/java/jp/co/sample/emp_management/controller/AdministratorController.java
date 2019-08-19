@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jp.co.sample.emp_management.domain.Administrator;
 import jp.co.sample.emp_management.form.InsertAdministratorForm;
 import jp.co.sample.emp_management.form.LoginForm;
-import jp.co.sample.emp_management.repository.AdministratorRepository;
 import jp.co.sample.emp_management.service.AdministratorService;
 
 /**
@@ -71,9 +70,7 @@ public class AdministratorController {
 	 * @return ログイン画面へリダイレクト
 	 */
 	@RequestMapping("/insert")
-	public String insert(@Validated InsertAdministratorForm form,
-						BindingResult result,
-						Model model
+	public String insert(@Validated InsertAdministratorForm form,BindingResult result,Model model
 						) {
 		
 		if(result.hasErrors()) {
@@ -82,6 +79,11 @@ public class AdministratorController {
 		
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
+		
+		if(!form.getPassword().equals(form.getPasswaordConfirm())) {
+			model.addAttribute("passCheck", "パスワードが一致しません");
+			return toInsert();
+		}
 		
 
 		if(administratorService.findMailAddress(form.getMailAddress()) == null) {

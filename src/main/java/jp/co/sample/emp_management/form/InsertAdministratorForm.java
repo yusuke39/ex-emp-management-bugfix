@@ -23,6 +23,17 @@ public class InsertAdministratorForm {
 	/** パスワード */
 	@NotBlank(message = "値を入力してください")
 	private String password;
+	@NotBlank(message = "値を入力してください")
+	/**確認用パスワード*/
+	private String passwaordConfirm;
+
+	public String getPasswaordConfirm() {
+		return passwaordConfirm;
+	}
+
+	public void setPasswaordConfirm(String passwaordConfirm) {
+		this.passwaordConfirm = passwaordConfirm;
+	}
 
 	public String getName() {
 		return name;
@@ -51,7 +62,8 @@ public class InsertAdministratorForm {
 	@Override
 	public String toString() {
 		return "InsertAdministratorForm [name=" + name + ", mailAddress=" + mailAddress + ", password=" + password
-				+ "]";
+				+ ", passwaordConfirm=" + passwaordConfirm + "]";
 	}
+
 
 }

@@ -41,6 +41,12 @@ public class AdministratorService {
 		return administrator;
 	}
 	
+	/**
+	 * メールアドレスが重複していないかチェックする.
+	 * 
+	 * @param mailAddress
+	 * @return
+	 */
 	public Administrator findMailAddress(String mailAddress) {
 		if(administratorRepository.findByMailAddress(mailAddress)  == null) {
 			return null;
