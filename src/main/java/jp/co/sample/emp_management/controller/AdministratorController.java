@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jp.co.sample.emp_management.domain.Administrator;
 import jp.co.sample.emp_management.form.InsertAdministratorForm;
 import jp.co.sample.emp_management.form.LoginForm;
+import jp.co.sample.emp_management.repository.AdministratorRepository;
 import jp.co.sample.emp_management.service.AdministratorService;
 
 /**
@@ -28,6 +29,7 @@ public class AdministratorController {
 
 	@Autowired
 	private AdministratorService administratorService;
+	
 	
 	@Autowired
 	private HttpSession session;
@@ -80,14 +82,16 @@ public class AdministratorController {
 		
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
-		try {
+		
+
+		if(administratorService.findMailAddress(form.getMailAddress()) == null) {
 			BeanUtils.copyProperties(form, administrator);
 			administratorService.insert(administrator);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			model.addAttribute("duplicate", "既に登録されているメールアドレスです。");
+		} else {
+			model.addAttribute("duplicate", "メールアドレスが既に登録されています");
 			return toInsert();
 		}
+	
 		return "redirect:/";
 	}
 
