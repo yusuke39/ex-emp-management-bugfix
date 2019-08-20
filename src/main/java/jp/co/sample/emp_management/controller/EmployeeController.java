@@ -92,4 +92,15 @@ public class EmployeeController {
 		employeeService.update(employee);
 		return "redirect:/employee/showList";
 	}
+	
+	
+	@RequestMapping("/findEmployee")
+	public String findEmployee(String name, Model model) {
+		List<Employee> employeeList = employeeService.findEmployeeName(name);
+		if(employeeList.size() == 0) {
+			model.addAttribute("nullerror", "１件もありませんでした");
+		} 
+		model.addAttribute("employeeList", employeeList);
+		return "employee/list";
+	}
 }
