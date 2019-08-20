@@ -61,6 +61,22 @@
 				class="table-responsive col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-sm-12 col-xs-12">
 
 <!-- ここから上を編集する必要はありません -->
+	
+		<h3>従業員検索</h3>
+		<form th:action="@{/employee/findEmployee}" method="post">
+			<input type="text" name="name" >
+			<button>検索</button>
+		</form><br>
+		<span th:text="${nullerror}" style="color:red"></span>
+		
+		<!-- <div>
+			<span th:text="${nullerror}" style="color:red"></span>
+			<hr>
+			<div th:each="employee : ${findemployeeList}">
+				<a th:href="@{'/employee/showDetail?id=' + ${employee.id}}"><span th:text="${employee.name}"></span></a><br>
+				<hr>
+			</div> 
+		</div> -->
 
 <!-- ここにモックのtable要素を貼り付けます -->
 
@@ -75,7 +91,7 @@
 					<tbody>
 						<tr th:each="employee : ${employeeList}">
 							<td>
-								<a href="detail.html" th:href="@{'/employee/showDetail?id=' + ${employee.id}}">
+								<a th:href="@{'/employee/showDetail?id=' + ${employee.id}}">
 									<span th:text="${employee.name}">山田太郎</span>
 								</a>
 							</td>

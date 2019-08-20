@@ -55,7 +55,6 @@
 									<div class="col-sm-12">
 										<label for="mailAddress">
 											メールアドレス:
-												<span th:text="${duplicate}" style="color:red"></span>
 										</label>
 										<label th:if="${#fields.hasErrors('mailAddress')}" th:errors="*{mailAddress}" class="error-messages">
 											メールアドレスを入力してください
@@ -86,7 +85,6 @@
 									<div class="col-sm-12">
 										<label for="passwaordConfirm">
 											パスワード確認:
-											<span th:text="${passCheck}" style="color:red"></span>
 										</label>
 										<label th:if="${#fields.hasErrors('passwaordConfirm')}" th:errors="*{passwaordConfirm}" class="error-messages">
 											パスワードをもう一度入力して下さい
