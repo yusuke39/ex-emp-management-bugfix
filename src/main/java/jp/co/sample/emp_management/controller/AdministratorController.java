@@ -81,7 +81,7 @@ public class AdministratorController {
 		// フォームからドメインにプロパティ値をコピー
 		
 		if(!form.getPassword().equals(form.getPasswaordConfirm())) {
-			model.addAttribute("passCheck", "パスワードが一致しません");
+			result.rejectValue("passwaordConfirm",null, "パスワードが一致しません");
 			return toInsert();
 		}
 		
@@ -90,7 +90,7 @@ public class AdministratorController {
 			BeanUtils.copyProperties(form, administrator);
 			administratorService.insert(administrator);
 		} else {
-			model.addAttribute("duplicate", "メールアドレスが既に登録されています");
+			result.rejectValue("mailAddress",null, "メールアドレスが一致しません");
 			return toInsert();
 		}
 	
