@@ -4,6 +4,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +28,14 @@ import jp.co.sample.emp_management.service.AdministratorService;
 @Controller
 @RequestMapping("/")
 public class AdministratorController {
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Bean
+	PasswordEncoder PasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 	@Autowired
 	private AdministratorService administratorService;
@@ -73,25 +84,24 @@ public class AdministratorController {
 	public String insert(@Validated InsertAdministratorForm form,BindingResult result,Model model
 						) {
 		
-		
-		Administrator administrator = new Administrator();
-		// フォームからドメインにプロパティ値をコピー
-		
 		if(!form.getPassword().equals(form.getPasswaordConfirm())) {
 			result.rejectValue("passwaordConfirm",null, "パスワードが一致しません");
 		}
 		
-
-		if(administratorService.findMailAddress(form.getMailAddress()) == null) {
-			BeanUtils.copyProperties(form, administrator);
-			administratorService.insert(administrator);
-		} else {
+		if(administratorService.findMailAddress(form.getMailAddress()) != null) {
 			result.rejectValue("mailAddress",null, "メールアドレスは既に登録されています");
-		}
+		} 
 		
 		if(result.hasErrors()) {
 			return toInsert();
 		}
+		
+		// フォームからドメインにプロパティ値をコピー
+		Administrator administrator = new Administrator();
+		BeanUtils.copyProperties(form, administrator);
+		administrator.setPassword(passwordEncoder.encode(form.getPassword()));
+		administratorService.insert(administrator);
+		
 	
 		return "redirect:/";
 	}
@@ -120,11 +130,13 @@ public class AdministratorController {
 	 */
 	@RequestMapping("/login")
 	public String login(@Validated LoginForm form, BindingResult result, Model model) {
-		Administrator administrator = administratorService.login(form.getMailAddress(), form.getPassword());
-		if (administrator == null) {
+		Administrator administrator = administratorService.findMailAddress(form.getMailAddress());
+		
+		if(administrator == null || !passwordEncoder.matches(form.getPassword(), administrator.getPassword())) {
 			model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
 			return toLogin();
 		}
+		
 		session.setAttribute("administratorName", administrator.getName());
 		return "forward:/employee/showList";
 	}

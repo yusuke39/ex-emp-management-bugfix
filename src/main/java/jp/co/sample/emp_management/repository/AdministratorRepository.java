@@ -1,5 +1,7 @@
 package jp.co.sample.emp_management.repository;
 
+
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,8 @@ import jp.co.sample.emp_management.domain.Administrator;
  * 
  */
 @Repository
-public class AdministratorRepository {
+public class AdministratorRepository{
+	
 
 	/**
 	 * Administratorオブジェクトを生成するローマッパー.
@@ -32,6 +35,7 @@ public class AdministratorRepository {
 		administrator.setPassword(rs.getString("password"));
 		return administrator;
 	};
+	
 
 	@Autowired
 	private NamedParameterJdbcTemplate template;
