@@ -37,10 +37,10 @@ public class AdministratorService {
 	 * @param password パスワード
 	 * @return 管理者情報　存在しない場合はnullが返ります
 	 */
-	public Administrator login(String mailAddress, String passward) {
-		Administrator administrator = administratorRepository.findByMailAddressAndPassward(mailAddress, passward);
-		return administrator;
-	}
+//	public Administrator login(String mailAddress, String passward) {
+//		Administrator administrator = administratorRepository.findByMailAddressAndPassward(mailAddress, passward);
+//		return administrator;
+//	}
 	
 	/**
 	 * メールアドレスが重複していないかチェックする.

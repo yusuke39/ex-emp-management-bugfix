@@ -57,5 +57,14 @@ public class EmployeeService {
 		List<Employee> employeeList = employeeRepository.findEmployee(name);
 		return employeeList;
 	}
+	
+	public List<Employee> findEmployeesForPagenation(Integer page){
+		List<Employee> employeeList = employeeRepository.findOnlyTenEmployee(page);
+		return employeeList;
+	}
+	
+	public Integer count() {
+		return employeeRepository.count();
+	}
 
 }

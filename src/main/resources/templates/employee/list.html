@@ -103,8 +103,12 @@
 							</td>
 						</tr>
 					</tbody>
-				</table>
-
+				</table><br>
+				
+				
+				<a th:each="i : ${#numbers.sequence(1, num)}" th:text="${i}" th:href="@{'/employee/pagination?page=' + ${i}}" >
+				1
+				</a>
 
 <!-- ここから下を編集する必要はありません -->
 

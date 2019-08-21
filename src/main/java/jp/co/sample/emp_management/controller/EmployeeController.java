@@ -103,4 +103,22 @@ public class EmployeeController {
 		model.addAttribute("employeeList", employeeList);
 		return "employee/list";
 	}
+	
+	@RequestMapping("/pagination")
+	public String pagination(Integer page,Model model) {
+		
+		System.out.println(employeeService.count());
+		
+		if(employeeService.count() % 10 == 0) {
+			model.addAttribute("num", employeeService.count() / 10);
+		} else {
+			model.addAttribute("num",employeeService.count() / 10 + 1);
+		}
+		
+		List<Employee> employList = employeeService.findEmployeesForPagenation(page);
+		model.addAttribute("employeeList", employList);
+		return "employee/list";
+	}
+	
+	
 }

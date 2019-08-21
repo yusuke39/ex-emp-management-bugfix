@@ -94,4 +94,22 @@ public class EmployeeRepository {
 		
 		return employeeList;
 	}
+	
+	public List<Employee> findOnlyTenEmployee (Integer page){
+		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count "
+					+ "FROM employees ORDER BY hire_date LIMIT 10 OFFSET :num";
+		
+		SqlParameterSource param = new MapSqlParameterSource().addValue("num",  10 * (page - 1));
+		
+		List<Employee> employeeList = template.query(sql, param,EMPLOYEE_ROW_MAPPER);
+		
+		return employeeList;
+	}
+	
+	public Integer count() {
+		String sql = "SELECT COUNT(*) FROM employees";
+		SqlParameterSource param = new MapSqlParameterSource();
+		Integer count = template.queryForObject(sql,param ,Integer.class);
+		return count;
+	}
 }
