@@ -22,15 +22,15 @@ public class EmployeeService {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 	
-	/**
-	 * 従業員情報を全件取得します.
-	 * 
-	 * @return　従業員情報一覧
-	 */
-	public List<Employee> showList() {
-		List<Employee> employeeList = employeeRepository.findAll();
-		return employeeList;
-	}
+//	/**
+//	 * 従業員情報を全件取得します.
+//	 * 
+//	 * @return　従業員情報一覧
+//	 */
+//	public List<Employee> showList() {
+//		List<Employee> employeeList = employeeRepository.findAll();
+//		return employeeList;
+//	}
 	
 	/**
 	 * 従業員情報を取得します.
@@ -53,18 +53,30 @@ public class EmployeeService {
 		employeeRepository.update(employee);
 	}
 	
-	public List<Employee> findEmployeeName(String name){
-		List<Employee> employeeList = employeeRepository.findEmployee(name);
-		return employeeList;
+	public List<Employee> search(String name, Integer page){
+		if(name == null || "".equals(name) || "null".equals(name)) {
+			return employeeRepository.findAllForPaging(page);
+		}
+		
+		return employeeRepository.findLikeNameForPaging(name, page);
+		
 	}
 	
-	public List<Employee> findEmployeesForPagenation(Integer page){
-		List<Employee> employeeList = employeeRepository.findOnlyTenEmployee(page);
-		return employeeList;
-	}
+//	public List<Employee> findEmployeesForPagenation(Integer page){
+//		
+//		List<Employee> employeeList = employeeRepository.findAllForPaging(page);
+//		return employeeList;
+//	}
 	
-	public Integer count() {
-		return employeeRepository.count();
+	
+	
+	public Integer getCount(String name) {
+		System.out.println(name + "Zaaa");
+		if(name == null || "".equals(name) || "null".equals(name)) {
+			System.out.println("if文中");
+			return employeeRepository.getFindAllCount();
+		}
+		return employeeRepository.getFindLikeNameCount(name);
 	}
 
 }

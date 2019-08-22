@@ -38,7 +38,7 @@ public class AdministratorService {
 	 * @return 管理者情報　存在しない場合はnullが返ります
 	 */
 //	public Administrator login(String mailAddress, String passward) {
-//		Administrator administrator = administratorRepository.findByMailAddressAndPassward(mailAddress, passward);
+//		Administrator administrator = administratorRepository.findByMailAddress(mailAddress);
 //		return administrator;
 //	}
 	

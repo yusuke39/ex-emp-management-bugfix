@@ -46,12 +46,12 @@ public class EmployeeController {
 	 * @param model モデル
 	 * @return 従業員一覧画面
 	 */
-	@RequestMapping("/showList")
-	public String showList(Model model) {
-		List<Employee> employeeList = employeeService.showList();
-		model.addAttribute("employeeList", employeeList);
-		return "employee/list";
-	}
+//	@RequestMapping("/showList")
+//	public String showList(Model model) {
+//		List<Employee> employeeList = employeeService.showList();
+//		model.addAttribute("employeeList", employeeList);
+//		return "employee/list";
+//	}
 
 	
 	/////////////////////////////////////////////////////
@@ -90,33 +90,43 @@ public class EmployeeController {
 		employee.setId(form.getIntId());
 		employee.setDependentsCount(form.getIntDependentsCount());
 		employeeService.update(employee);
-		return "redirect:/employee/showList";
+		return "redirect:/employee/pagination?page=1";
 	}
 	
 	
-	@RequestMapping("/findEmployee")
-	public String findEmployee(String name, Model model) {
-		List<Employee> employeeList = employeeService.findEmployeeName(name);
-		if(employeeList.size() == 0) {
-			model.addAttribute("nullerror", "１件もありませんでした");
-		} 
-		model.addAttribute("employeeList", employeeList);
-		return "employee/list";
-	}
+//	@RequestMapping("/findEmployee")
+//	public String findEmployee(String name, Model model) {
+//		List<Employee> employeeList = employeeService.findEmployeeName(name);
+//		if(employeeList.size() == 0) {
+//			model.addAttribute("nullerror", "１件もありませんでした");
+//		} 
+//		model.addAttribute("employeeList", employeeList);
+//		return "employee/list";
+//	}
+	
+	
 	
 	@RequestMapping("/pagination")
-	public String pagination(Integer page,Model model) {
+	public String pagination(Integer page, String name, Model model) {
 		
-		System.out.println(employeeService.count());
 		
-		if(employeeService.count() % 10 == 0) {
-			model.addAttribute("num", employeeService.count() / 10);
+		model.addAttribute("name", name);
+		Integer count = employeeService.getCount(name);
+		if(count % 10 == 0) {
+			model.addAttribute("num", count / 10);
 		} else {
-			model.addAttribute("num",employeeService.count() / 10 + 1);
+			model.addAttribute("num",count / 10 + 1);
 		}
 		
-		List<Employee> employList = employeeService.findEmployeesForPagenation(page);
-		model.addAttribute("employeeList", employList);
+		if(page == null) {
+			page = 1;
+		}
+		List<Employee> employeeList = employeeService.search(name, page);
+		if(employeeList.size() == 0 || "name".equals(name)) {
+			model.addAttribute("nullerror", "1件もありません");
+		}
+			model.addAttribute("employeeList", employeeList);
+
 		return "employee/list";
 	}
 	

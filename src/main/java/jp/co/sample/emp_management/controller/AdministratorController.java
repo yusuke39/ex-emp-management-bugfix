@@ -131,14 +131,14 @@ public class AdministratorController {
 	@RequestMapping("/login")
 	public String login(@Validated LoginForm form, BindingResult result, Model model) {
 		Administrator administrator = administratorService.findMailAddress(form.getMailAddress());
-		
+		System.out.println(administrator);
 		if(administrator == null || !passwordEncoder.matches(form.getPassword(), administrator.getPassword())) {
 			model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
 			return toLogin();
 		}
 		
 		session.setAttribute("administratorName", administrator.getName());
-		return "forward:/employee/showList";
+		return "forward:/employee/pagination";
 	}
 	
 	/////////////////////////////////////////////////////

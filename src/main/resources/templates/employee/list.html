@@ -63,7 +63,7 @@
 <!-- ここから上を編集する必要はありません -->
 	
 		<h3>従業員検索</h3>
-		<form th:action="@{/employee/findEmployee}" method="post">
+		<form th:action="@{/employee/pagination}" method="post">
 			<input type="text" name="name" >
 			<button>検索</button>
 		</form><br>
@@ -105,10 +105,9 @@
 					</tbody>
 				</table><br>
 				
+				<h1 th:text="${num}">1</h1>
+				<a th:each="i : ${#numbers.sequence(1, num)}" th:text="${i}" th:href="@{'/employee/pagination?page=' + ${i} + '&name=' + ${name}}">1</a>
 				
-				<a th:each="i : ${#numbers.sequence(1, num)}" th:text="${i}" th:href="@{'/employee/pagination?page=' + ${i}}" >
-				1
-				</a>
 
 <!-- ここから下を編集する必要はありません -->
 
